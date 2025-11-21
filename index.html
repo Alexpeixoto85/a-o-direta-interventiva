@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADIF - Ação Direta de Intervenção Federal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -21,7 +22,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow-x: hidden;
+            overflow: hidden;
         }
         
         .slides-container {
@@ -30,10 +31,10 @@
             height: 700px;
             background: white;
             border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             overflow: hidden;
             position: relative;
-            border: 8px solid #d4af37;
+            border: 3px solid #d4af37;
         }
         
         .slide {
@@ -82,6 +83,7 @@
             margin-bottom: 25px;
             position: relative;
             overflow: hidden;
+            border-bottom: 3px solid #d4af37;
         }
         
         .slide-header::before {
@@ -115,6 +117,16 @@
             background: #f8f9fa;
             border-radius: 0 8px 8px 0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .point::before {
+            content: "⚖️";
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
         }
         
         .highlight {
@@ -124,6 +136,16 @@
             margin: 15px 0;
             border-left: 5px solid #1976d2;
             box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .highlight::before {
+            content: "📚";
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
         }
         
         .example-box {
@@ -133,6 +155,16 @@
             padding: 18px;
             margin: 18px 0;
             box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .example-box::before {
+            content: "🔍";
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
         }
         
         .example-title {
@@ -157,45 +189,25 @@
             height: 560px;
         }
         
-        .video-description {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 16px;
-            color: #666;
-            font-style: italic;
-        }
-        
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px 40px;
-            background: #f5f5f5;
-            border-top: 3px solid #d4af37;
-        }
-        
-        button {
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #1a237e, #283593);
+        .fullscreen-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(26, 35, 126, 0.9);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 5px;
+            padding: 10px 15px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
+            z-index: 1000;
             transition: all 0.3s;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
-        button:hover {
-            background: linear-gradient(135deg, #283593, #3949ab);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-        }
-        
-        .page-indicator {
-            font-size: 18px;
-            color: #555;
-            align-self: center;
-            font-weight: bold;
+        .fullscreen-btn:hover {
+            background: rgba(26, 35, 126, 1);
+            transform: scale(1.05);
         }
         
         .reference {
@@ -237,21 +249,15 @@
         
         .logo {
             display: inline-block;
-            padding: 20px 40px;
-            background: linear-gradient(135deg, #1a237e, #283593);
-            color: white;
-            border-radius: 15px;
-            font-size: 28px;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            border: 3px solid #d4af37;
+            max-width: 300px;
+            height: auto;
         }
         
-        .logo-subtitle {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #666;
-            font-weight: normal;
+        .logo-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
         .legal-theme {
@@ -263,20 +269,91 @@
             font-style: italic;
         }
         
-        .fade-in {
-            animation: fadeIn 0.8s ease-in;
+        .navigation-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .navigation-hint:hover {
+            opacity: 1;
+        }
+        
+        .legal-symbols {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #d4af37;
+        }
+        
+        .law-icon {
+            font-size: 28px;
+            margin-right: 10px;
+        }
+        
+        .file-input-container {
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .file-input-label {
+            display: inline-block;
+            background: #1a237e;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-bottom: 15px;
+        }
+        
+        .file-input-label:hover {
+            background: #283593;
+        }
+        
+        #logoUpload {
+            display: none;
+        }
+        
+        /* Estilos para tela cheia */
+        body:fullscreen .slides-container {
+            width: 100vw;
+            height: 100vh;
+            max-width: none;
+            border-radius: 0;
+            border: none;
+        }
+        
+        body:-webkit-full-screen .slides-container {
+            width: 100vw;
+            height: 100vh;
+            max-width: none;
+            border-radius: 0;
+            border: none;
+        }
+        
+        body:-moz-full-screen .slides-container {
+            width: 100vw;
+            height: 100vh;
+            max-width: none;
+            border-radius: 0;
+            border: none;
         }
         
         /* Responsividade */
         @media (max-width: 768px) {
             .slides-container {
                 height: 600px;
-                border-width: 4px;
+                border-width: 2px;
             }
             
             .slide {
@@ -297,18 +374,22 @@
                 margin: 12px 0;
             }
             
-            .controls {
-                padding: 15px 20px;
-            }
-            
-            button {
-                padding: 10px 15px;
-                font-size: 14px;
-            }
-            
             .video-container iframe {
                 max-width: 280px;
                 height: 500px;
+            }
+            
+            .fullscreen-btn {
+                top: 10px;
+                right: 10px;
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            
+            .legal-symbols {
+                top: 10px;
+                left: 10px;
+                font-size: 20px;
             }
         }
         
@@ -330,8 +411,7 @@
             }
             
             .logo {
-                font-size: 20px;
-                padding: 15px 25px;
+                max-width: 200px;
             }
             
             .video-container iframe {
@@ -347,256 +427,316 @@
             margin-top: 10px;
             font-style: italic;
         }
+        
+        .symbol-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .symbol {
+            font-size: 24px;
+            margin-right: 15px;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .legal-badge {
+            display: inline-block;
+            background: #1a237e;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
+    <button class="fullscreen-btn" onclick="toggleFullscreen()"><i class="fas fa-expand"></i> Tela Cheia</button>
+    
     <div class="slides-container">
         <!-- Slide 1: Capa -->
         <div class="slide active" id="slide1">
+            <div class="legal-symbols">
+                <i class="fas fa-balance-scale law-icon"></i>
+                <i class="fas fa-gavel"></i>
+            </div>
             <div class="slide-header">
                 <h1 class="slide-title">AÇÃO DIRETA DE INTERVENÇÃO FEDERAL - ADIF</h1>
                 <p class="slide-subtitle">Instrumento Constitucional de Defesa do Pacto Federativo</p>
             </div>
             <div class="slide-content">
                 <div class="logo-container">
+                    <div class="file-input-container">
+                        <label for="logoUpload" class="file-input-label">
+                            <i class="fas fa-upload"></i> Carregar Logo da Instituição
+                        </label>
+                        <input type="file" id="logoUpload" accept="image/*">
+                    </div>
                     <div class="logo">
-                        FRM
-                        <div class="logo-subtitle"></div>
+                        <img id="institutionLogo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWEyMzdlIiByeD0iMTAiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjQwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+RlJNPC90ZXh0PgogIDx0ZXh0IHg9IjUwJSIgeT0iNjAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj5HUkFEVUHDg8ODTyBFPC90ZXh0Pgo8L3N2Zz4K" alt="Logo FRM" class="logo-img">
                     </div>
                 </div>
                 
                 <div class="authors">
                     <div class="content-item">
-                        <p>Barbara Emily Correia</p>
-                        <p>José Alex Peixoto de Assis</p>
-                        <p>Glaucia Lemos de Oliveira Pinto do Nascimento</p>
-                        <p>Raquel do Nascimento</p>
-                        <p>Saulo Ramos da Silva</p>
+                        <p><i class="fas fa-user-graduate symbol"></i>Barbara Emily Correia</p>
+                        <p><i class="fas fa-user-graduate symbol"></i>José Alex Peixoto de Assis</p>
+                        <p><i class="fas fa-user-graduate symbol"></i>Glaucia Lemos de Oliveira Pinto do Nascimento</p>
+                        <p><i class="fas fa-user-graduate symbol"></i>Raquel do Nascimento</p>
+                        <p><i class="fas fa-user-graduate symbol"></i>Saulo Ramos da Silva</p>
                     </div>
                 </div>
                 
                 <div class="institution content-item">
-                    <p>FACULDADE RAIMUNDO MARINHO</p>
-                    <p>DIREITO CONSTITUCIONAL</p>
+                    <p><i class="fas fa-university"></i> FACULDADE RAIMUNDO MARINHO</p>
+                    <p><i class="fas fa-scale-balanced"></i> DIREITO CONSTITUCIONAL</p>
                 </div>
                 
                 <div class="year content-item">
-                    <p>MACEIÓ - 2025</p>
+                    <p><i class="fas fa-calendar"></i> MACEIÓ - 2025</p>
                 </div>
                 
                 <div class="highlight content-item">
-                    <p>Artigo apresentado à Universidade Faculdade Raimundo Marinho, como parte das exigências para a obtenção de nota complementar.</p>
-                    <p><strong>Orientador:</strong> Prof. Marcos Melo</p>
+                    <p><i class="fas fa-file-contract"></i> Artigo apresentado à Universidade Faculdade Raimundo Marinho, como parte das exigências para a obtenção de nota complementar.</p>
+                    <p><i class="fas fa-chalkboard-teacher"></i> <strong>Orientador:</strong> Prof. Marcos Melo</p>
                 </div>
             </div>
-            <div class="legal-theme">Direito Constitucional | Federalismo | Controle de Constitucionalidade</div>
+            <div class="legal-theme"><i class="fas fa-balance-scale-left"></i> Direito Constitucional | Federalismo | Controle de Constitucionalidade</div>
+            <div class="navigation-hint"><i class="fas fa-arrows-left-right"></i> Use as setas ← → do teclado para navegar | <i class="fas fa-mouse-pointer"></i> Clique para avançar</div>
         </div>
         
         <!-- Slide 2: Introdução -->
         <div class="slide" id="slide2">
+            <div class="legal-symbols">
+                <i class="fas fa-gavel"></i>
+                <i class="fas fa-book-law"></i>
+            </div>
             <div class="slide-header">
-                <h1 class="slide-title">O QUE É A ADIF?</h1>
+                <h1 class="slide-title">O QUE É A ADIF? <span class="legal-badge">CF/88 Art. 34</span></h1>
                 <p class="slide-subtitle">Conceito e Fundamentos Constitucionais</p>
             </div>
             <div class="slide-content">
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>🔹 Ação de competência originária do STF</strong> prevista na Constituição Federal de 1988</p>
+                        <p><i class="fas fa-landmark"></i> <strong>Ação de competência originária do STF</strong> prevista na Constituição Federal de 1988</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>🔹 Instrumento processual</strong> para intervenção federal em Estados e Distrito Federal</p>
+                        <p><i class="fas fa-tools"></i> <strong>Instrumento processual</strong> para intervenção federal em Estados e Distrito Federal</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>🔹 Finalidade constitucional:</strong> restaurar a ordem jurídica gravemente violada</p>
+                        <p><i class="fas fa-bullseye"></i> <strong>Finalidade constitucional:</strong> restaurar a ordem jurídica gravemente violada</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>🔹 Natureza de última ratio</strong> (último recurso do federalismo)</p>
+                        <p><i class="fas fa-exclamation-triangle"></i> <strong>Natureza de última ratio</strong> (último recurso do federalismo)</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="highlight">
-                        <p>"A intervenção federal é uma medida excepcional que consiste na suspensão temporária da autonomia de um ente federado para restaurar a ordem constitucional."</p>
-                        <p class="reference">Vicente Paulo e Marcelo Alexandrino (2016, p. 450)</p>
+                        <p><i class="fas fa-quote-left"></i> A intervenção federal é uma medida excepcional que consiste na suspensão temporária da autonomia de um ente federado para restaurar a ordem constitucional.</p>
+                        <p class="reference"><i class="fas fa-book"></i> Vicente Paulo e Marcelo Alexandrino (2016, p. 450)</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="reference">
-                        <p>Referência: Arts. 34 a 36 da CF/88; Lei 13.988/2020</p>
+                        <p><i class="fas fa-link"></i> Referência: Arts. 34 a 36 da CF/88; Lei 13.988/2020</p>
                     </div>
                 </div>
             </div>
-            <div class="legal-theme">Art. 34, VII da CF/88</div>
+            <div class="legal-theme"><i class="fas fa-paragraph"></i> Art. 34, VII da CF/88</div>
+            <div class="navigation-hint"><i class="fas fa-arrows-left-right"></i> Use as setas ← → do teclado para navegar | <i class="fas fa-mouse-pointer"></i> Clique para avançar</div>
         </div>
         
         <!-- Slide 3: Fundamentação Legal -->
         <div class="slide" id="slide3">
+            <div class="legal-symbols">
+                <i class="fas fa-scale-balanced"></i>
+                <i class="fas fa-book"></i>
+            </div>
             <div class="slide-header">
-                <h1 class="slide-title">FUNDAMENTAÇÃO LEGAL</h1>
+                <h1 class="slide-title">FUNDAMENTAÇÃO LEGAL <span class="legal-badge">Lei 13.988/2020</span></h1>
                 <p class="slide-subtitle">Base Normativa e Princípios Constitucionais</p>
             </div>
             <div class="slide-content">
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>📚 Constituição Federal de 1988</strong> - Art. 34, VII</p>
+                        <p><i class="fas fa-constitution"></i> <strong>Constituição Federal de 1988</strong> - Art. 34, VII</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>⚖️ Lei 13.988/2020</strong> - Regulamenta a ADIF e ADPF</p>
+                        <p><i class="fas fa-law"></i> <strong>Lei 13.988/2020</strong> - Regulamenta a ADIF e ADPF</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>🎯 Princípios constitucionais sensíveis (Art. 34, VII):</strong></p>
+                        <p><i class="fas fa-star-of-life"></i> <strong>Princípios constitucionais sensíveis (Art. 34, VII):</strong></p>
                         <ul style="margin-left: 30px; margin-top: 10px;">
-                            <li>Forma republicana, sistema representativo e regime democrático</li>
-                            <li>Direitos da pessoa humana</li>
-                            <li>Autonomia municipal</li>
-                            <li>Prestação de contas da administração pública</li>
+                            <li><i class="fas fa-flag"></i> Forma republicana, sistema representativo e regime democrático</li>
+                            <li><i class="fas fa-user-shield"></i> Direitos da pessoa humana</li>
+                            <li><i class="fas fa-city"></i> Autonomia municipal</li>
+                            <li><i class="fas fa-file-invoice-dollar"></i> Prestação de contas da administração pública</li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="example-box">
-                        <div class="example-title">DIFERENCIAÇÃO DA ADI COMUM:</div>
-                        <p><strong>📄 ADI</strong>: Declara inconstitucionalidade de norma<br>
-                        <strong>⚔️ ADIF</strong>: Visa intervenção federal concreta</p>
+                        <div class="example-title"><i class="fas fa-not-equal"></i> DIFERENCIAÇÃO DA ADI COMUM:</div>
+                        <p><i class="fas fa-file-contract"></i> <strong>ADI</strong>: Declara inconstitucionalidade de norma<br>
+                        <i class="fas fa-handshake"></i> <strong>ADIF</strong>: Visa intervenção federal concreta</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="reference">
-                        <p>Referência: BRASIL. Constituição da República Federativa do Brasil de 1988; Lei nº 13.988/2020</p>
+                        <p><i class="fas fa-link"></i> Referência: BRASIL. Constituição da República Federativa do Brasil de 1988; Lei nº 13.988/2020</p>
                     </div>
                 </div>
             </div>
-            <div class="legal-theme">Lei 13.988/2020</div>
+            <div class="legal-theme"><i class="fas fa-paragraph"></i> Lei 13.988/2020</div>
+            <div class="navigation-hint"><i class="fas fa-arrows-left-right"></i> Use as setas ← → do teclado para navegar | <i class="fas fa-mouse-pointer"></i> Clique para avançar</div>
         </div>
         
         <!-- Slide 4: Hipóteses de Cabimento -->
         <div class="slide" id="slide4">
+            <div class="legal-symbols">
+                <i class="fas fa-exclamation-circle"></i>
+                <i class="fas fa-ban"></i>
+            </div>
             <div class="slide-header">
-                <h1 class="slide-title">QUANDO CABE A ADIF?</h1>
+                <h1 class="slide-title">QUANDO CABE A ADIF? <span class="legal-badge">Princípios Sensíveis</span></h1>
                 <p class="slide-subtitle">Violação aos Princípios Constitucionais Sensíveis</p>
             </div>
             <div class="slide-content">
                 <div class="content-item">
-                    <p>A ADIF é cabível por violação grave aos princípios sensíveis:</p>
+                    <p><i class="fas fa-list"></i> A ADIF é cabível por violação grave aos princípios sensíveis:</p>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p>✅ <strong>Forma republicana</strong>: Tentativa de estabelecer governo vitalício ou hereditário</p>
+                        <p><i class="fas fa-republican"></i> <strong>Forma republicana</strong>: Tentativa de estabelecer governo vitalício ou hereditário</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p>✅ <strong>Direitos humanos</strong>: Perseguição política, tortura, desaparecimentos</p>
+                        <p><i class="fas fa-user-slash"></i> <strong>Direitos humanos</strong>: Perseguição política, tortura, desaparecimentos</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p>✅ <strong>Autonomia municipal</strong>: Extinção arbitrária de câmaras municipais</p>
+                        <p><i class="fas fa-building"></i> <strong>Autonomia municipal</strong>: Extinção arbitrária de câmaras municipais</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p>✅ <strong>Prestação de contas</strong>: Desvio grave de verbas públicas</p>
+                        <p><i class="fas fa-money-bill-wave"></i> <strong>Prestação de contas</strong>: Desvio grave de verbas públicas</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="example-box">
-                        <div class="example-title">CENÁRIO HIPOTÉTICO:</div>
+                        <div class="example-title"><i class="fas fa-lightbulb"></i> CENÁRIO HIPOTÉTICO:</div>
                         <p>Se um Estado extinguisse arbitrariamente as câmaras municipais, estaria violando a autonomia municipal, configurando hipótese para ADIF.</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="highlight">
-                        <p>"A ADIF deve ser usada apenas quando não houver outro meio eficaz para sanar a violação constitucional."</p>
-                        <p class="reference">Gilmar Ferreira Mendes (2021)</p>
+                        <p><i class="fas fa-quote-left"></i> A ADIF deve ser usada apenas quando não houver outro meio eficaz para sanar a violação constitucional.</p>
+                        <p class="reference"><i class="fas fa-book"></i> Gilmar Ferreira Mendes (2021)</p>
                     </div>
                 </div>
             </div>
-            <div class="legal-theme">Princípios Sensíveis Constitucionais</div>
+            <div class="legal-theme"><i class="fas fa-paragraph"></i> Princípios Sensíveis Constitucionais</div>
+            <div class="navigation-hint"><i class="fas fa-arrows-left-right"></i> Use as setas ← → do teclado para navegar | <i class="fas fa-mouse-pointer"></i> Clique para avançar</div>
         </div>
         
         <!-- Slide 5: Legitimidade -->
         <div class="slide" id="slide5">
+            <div class="legal-symbols">
+                <i class="fas fa-user-tie"></i>
+                <i class="fas fa-users"></i>
+            </div>
             <div class="slide-header">
-                <h1 class="slide-title">QUEM PODE PROPOR A ADIF?</h1>
+                <h1 class="slide-title">QUEM PODE PROPOR A ADIF? <span class="legal-badge">Legitimados</span></h1>
                 <p class="slide-subtitle">Legitimados Constitucionais e Legais</p>
             </div>
             <div class="slide-content">
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>🎖️ Legitimados exclusivos</strong> (Art. 9º da Lei 13.988/2020):</p>
+                        <p><i class="fas fa-list-check"></i> <strong>Legitimados exclusivos</strong> (Art. 9º da Lei 13.988/2020):</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
                         <div class="highlight">
-                            <p>• Presidente da República</p>
+                            <p><i class="fas fa-president"></i> Presidente da República</p>
                         </div>
                         <div class="highlight">
-                            <p>• Mesa do Senado Federal</p>
+                            <p><i class="fas fa-senate"></i> Mesa do Senado Federal</p>
                         </div>
                         <div class="highlight">
-                            <p>• Mesa da Câmara dos Deputados</p>
+                            <p><i class="fas fa-congress"></i> Mesa da Câmara dos Deputados</p>
                         </div>
                         <div class="highlight">
-                            <p>• Procurador-Geral da República</p>
+                            <p><i class="fas fa-user-tie"></i> Procurador-Geral da República</p>
                         </div>
                         <div class="highlight">
-                            <p>• Governadores de Estado</p>
+                            <p><i class="fas fa-landmark"></i> Governadores de Estado</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>📋 Rol taxativo</strong>: Não admite ampliação por analogia</p>
+                        <p><i class="fas fa-ban"></i> <strong>Rol taxativo</strong>: Não admite ampliação por analogia</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>⚖️ Natureza política</strong>: Reflete a seriedade da medida intervencionista</p>
+                        <p><i class="fas fa-democrat"></i> <strong>Natureza política</strong>: Reflete a seriedade da medida intervencionista</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="reference">
-                        <p>Referência: Lei 13.988/2020, art. 9º</p>
+                        <p><i class="fas fa-link"></i> Referência: Lei 13.988/2020, art. 9º</p>
                     </div>
                 </div>
             </div>
-            <div class="legal-theme">Legitimação Restrita</div>
+            <div class="legal-theme"><i class="fas fa-paragraph"></i> Legitimação Restrita</div>
+            <div class="navigation-hint"><i class="fas fa-arrows-left-right"></i> Use as setas ← → do teclado para navegar | <i class="fas fa-mouse-pointer"></i> Clique para avançar</div>
         </div>
         
         <!-- Slide 6: Vídeo Explicativo -->
         <div class="slide" id="slide6">
+            <div class="legal-symbols">
+                <i class="fas fa-video"></i>
+                <i class="fas fa-play-circle"></i>
+            </div>
             <div class="slide-header">
-                <h1 class="slide-title">EXPLICAÇÃO EM VÍDEO</h1>
+                <h1 class="slide-title">EXPLICAÇÃO EM VÍDEO <span class="legal-badge">Material Didático</span></h1>
                 <p class="slide-subtitle">Entenda a ADIF na Prática</p>
             </div>
             <div class="slide-content">
@@ -604,232 +744,259 @@
                     <div class="video-container">
                         <iframe width="315" height="560" src="https://www.youtube.com/embed/uhFXTNQVqfQ" title="Vídeo explicativo sobre ADIF" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <div class="short-video-note">🎥 Vídeo Short - Formato vertical para melhor visualização</div>
+                    <div class="short-video-note"><i class="fas fa-film"></i> Vídeo Short - Formato vertical para melhor visualização</div>
                 </div>
                 
                 <div class="content-item">
                     <div class="highlight">
-                        <p><strong>📚 Conteúdo do vídeo:</strong></p>
+                        <p><i class="fas fa-info-circle"></i> <strong>Conteúdo do vídeo:</strong></p>
                         <ul style="margin-left: 20px; margin-top: 10px;">
-                            <li>Explicação didática sobre intervenção federal</li>
-                            <li>Contexto prático da ADIF</li>
-                            <li>Casos concretos de aplicação</li>
-                            <li>Importância para o federalismo</li>
+                            <li><i class="fas fa-chalkboard-teacher"></i> Explicação didática sobre intervenção federal</li>
+                            <li><i class="fas fa-hammer"></i> Contexto prático da ADIF</li>
+                            <li><i class="fas fa-gavel"></i> Casos concretos de aplicação</li>
+                            <li><i class="fas fa-flag-usa"></i> Importância para o federalismo</li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>💡 Dica pedagógica:</strong> Assista ao vídeo para compreender a aplicação prática do instituto da intervenção federal no ordenamento jurídico brasileiro.</p>
+                        <p><i class="fas fa-lightbulb"></i> <strong>Dica pedagógica:</strong> Assista ao vídeo para compreender a aplicação prática do instituto da intervenção federal no ordenamento jurídico brasileiro.</p>
                     </div>
                 </div>
             </div>
-            <div class="legal-theme">Material Didático em Vídeo</div>
+            <div class="legal-theme"><i class="fas fa-paragraph"></i> Material Didático em Vídeo</div>
+            <div class="navigation-hint"><i class="fas fa-arrows-left-right"></i> Use as setas ← → do teclado para navegar | <i class="fas fa-mouse-pointer"></i> Clique para avançar</div>
         </div>
         
         <!-- Slide 7: Procedimento -->
         <div class="slide" id="slide7">
+            <div class="legal-symbols">
+                <i class="fas fa-footsteps"></i>
+                <i class="fas fa-list-ol"></i>
+            </div>
             <div class="slide-header">
-                <h1 class="slide-title">PROCEDIMENTO DA ADIF</h1>
+                <h1 class="slide-title">PROCEDIMENTO DA ADIF <span class="legal-badge">Tramitação</span></h1>
                 <p class="slide-subtitle">Tramitação perante o Supremo Tribunal Federal</p>
             </div>
             <div class="slide-content">
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>1️⃣ Fase cognitiva</strong>: Análise da procedência da ação pelo STF</p>
+                        <p><i class="fas fa-search"></i> <strong>1. Fase cognitiva</strong>: Análise da procedência da ação pelo STF</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>2️⃣ Medida liminar</strong>: STF pode determinar intervenção cautelar</p>
+                        <p><i class="fas fa-balance-scale"></i> <strong>2. Medida liminar</strong>: STF pode determinar intervenção cautelar</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>3️⃣ Nomeação de Interventor</strong>: Pelo Presidente da República</p>
+                        <p><i class="fas fa-user-tie"></i> <strong>3. Nomeação de Interventor</strong>: Pelo Presidente da República</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>4️⃣ Julgamento de mérito</strong>: Decisão definitiva sobre a intervenção</p>
+                        <p><i class="fas fa-gavel"></i> <strong>4. Julgamento de mérito</strong>: Decisão definitiva sobre a intervenção</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="highlight">
-                        <p><strong>📜 Efeitos da decisão:</strong></p>
+                        <p><i class="fas fa-bullseye"></i> <strong>Efeitos da decisão:</strong></p>
                         <ul style="margin-left: 20px; margin-top: 10px;">
-                            <li><strong>Erga omnes</strong> (eficácia contra todos)</li>
-                            <li><strong>Vinculante</strong> (obriga outras autoridades)</li>
-                            <li><strong>Suspensão temporária da autonomia</strong> do ente federado</li>
+                            <li><i class="fas fa-globe"></i> <strong>Erga omnes</strong> (eficácia contra todos)</li>
+                            <li><i class="fas fa-link"></i> <strong>Vinculante</strong> (obriga outras autoridades)</li>
+                            <li><i class="fas fa-pause-circle"></i> <strong>Suspensão temporária da autonomia</strong> do ente federado</li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="reference">
-                        <p>Referência: Cunha Júnior, Dirley da. Controle de Constitucionalidade (2020)</p>
+                        <p><i class="fas fa-book"></i> Referência: Cunha Júnior, Dirley da. Controle de Constitucionalidade (2020)</p>
                     </div>
                 </div>
             </div>
-            <div class="legal-theme">Processo Constitucional</div>
+            <div class="legal-theme"><i class="fas fa-paragraph"></i> Processo Constitucional</div>
+            <div class="navigation-hint"><i class="fas fa-arrows-left-right"></i> Use as setas ← → do teclado para navegar | <i class="fas fa-mouse-pointer"></i> Clique para avançar</div>
         </div>
         
         <!-- Slide 8: Contexto no Controle de Constitucionalidade -->
         <div class="slide" id="slide8">
+            <div class="legal-symbols">
+                <i class="fas fa-sitemap"></i>
+                <i class="fas fa-network-wired"></i>
+            </div>
             <div class="slide-header">
-                <h1 class="slide-title">ADIF NO CONTROLE DE CONSTITUCIONALIDADE</h1>
+                <h1 class="slide-title">ADIF NO CONTROLE DE CONSTITUCIONALIDADE <span class="legal-badge">Sistema</span></h1>
                 <p class="slide-subtitle">Relação com Outros Instrumentos de Defesa da Constituição</p>
             </div>
             <div class="slide-content">
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>🔍 Controle concreto</strong>: Atua sobre atos estatais (normativos ou materiais)</p>
+                        <p><i class="fas fa-crosshairs"></i> <strong>Controle concreto</strong>: Atua sobre atos estatais (normativos ou materiais)</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>🛠️ Natureza correitiva</strong>: Busca restaurar a legalidade constitucional</p>
+                        <p><i class="fas fa-wrench"></i> <strong>Natureza correitiva</strong>: Busca restaurar a legalidade constitucional</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p><strong>⚖️ Relação com ADPF</strong>: A ADPF pode evitar a necessidade de intervenção</p>
+                        <p><i class="fas fa-compress-arrows-alt"></i> <strong>Relação com ADPF</strong>: A ADPF pode evitar a necessidade de intervenção</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="highlight">
-                        <p>"A ADIF é a resposta constitucional brasileira para conflitos federativos, funcionando como um freio para evitar que as unidades federadas se desviem dos fundamentos do pacto federativo."</p>
-                        <p class="reference">Baseado em Mauro Cappelletti (1993)</p>
+                        <p><i class="fas fa-quote-left"></i> A ADIF é a resposta constitucional brasileira para conflitos federativos, funcionando como um freio para evitar que as unidades federadas se desviem dos fundamentos do pacto federativo.</p>
+                        <p class="reference"><i class="fas fa-book"></i> Baseado em Mauro Cappelletti (1993)</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="example-box">
-                        <div class="example-title">COMPARAÇÃO SISTÊMICA:</div>
-                        <p><strong>🛡️ ADPF</strong>: Remédio flexível para descumprimento de preceitos<br>
-                        <strong>⚔️ ADIF</strong>: Corretivo extremo para violações graves da federação</p>
+                        <div class="example-title"><i class="fas fa-balance-scale-left"></i> COMPARAÇÃO SISTÊMICA:</div>
+                        <p><i class="fas fa-shield-alt"></i> <strong>ADPF</strong>: Remédio flexível para descumprimento de preceitos<br>
+                        <i class="fas fa-fist-raised"></i> <strong>ADIF</strong>: Corretivo extremo para violações graves da federação</p>
                     </div>
                 </div>
             </div>
-            <div class="legal-theme">Sistema de Controle</div>
+            <div class="legal-theme"><i class="fas fa-paragraph"></i> Sistema de Controle</div>
+            <div class="navigation-hint"><i class="fas fa-arrows-left-right"></i> Use as setas ← → do teclado para navegar | <i class="fas fa-mouse-pointer"></i> Clique para avançar</div>
         </div>
         
         <!-- Slide 9: Conclusão -->
         <div class="slide" id="slide9">
+            <div class="legal-symbols">
+                <i class="fas fa-flag-checkered"></i>
+                <i class="fas fa-check-double"></i>
+            </div>
             <div class="slide-header">
-                <h1 class="slide-title">CONCLUSÕES</h1>
+                <h1 class="slide-title">CONCLUSÕES <span class="legal-badge">Síntese</span></h1>
                 <p class="slide-subtitle">Síntese do Instituto e sua Relevância Constitucional</p>
             </div>
             <div class="slide-content">
                 <div class="content-item">
                     <div class="point">
-                        <p>A ADIF é <strong>instrumento essencial</strong> para preservação da Federação brasileira</p>
+                        <p><i class="fas fa-toolbox"></i> A ADIF é <strong>instrumento essencial</strong> para preservação da Federação brasileira</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p>Natureza <strong>excepcional e drástica</strong> - última ratio do federalismo</p>
+                        <p><i class="fas fa-exclamation-triangle"></i> Natureza <strong>excepcional e drástica</strong> - última ratio do federalismo</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p>Última trincheira para garantia dos <strong>princípios constitucionais sensíveis</strong></p>
+                        <p><i class="fas fa-shield-alt"></i> Última trincheira para garantia dos <strong>princípios constitucionais sensíveis</strong></p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p>Manejo deve ser <strong>pautado pela prudência e estrita legalidade</strong></p>
+                        <p><i class="fas fa-hand-holding-heart"></i> Manejo deve ser <strong>pautado pela prudência e estrita legalidade</strong></p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="highlight">
-                        <p>"A autonomia federativa não é absoluta, mas sim condicionada ao respeito irrestrito aos pilares da ordem constitucional."</p>
+                        <p><i class="fas fa-quote-left"></i> A autonomia federativa não é absoluta, mas sim condicionada ao respeito irrestrito aos pilares da ordem constitucional.</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="reference">
-                        <p>Referências: ALEXANDRINO, Vicente; PAULO, Marcelo (2016); MENDES, Gilmar Ferreira (2021); CUNHA JÚNIOR, Dirley da (2020)</p>
+                        <p><i class="fas fa-book"></i> Referências: ALEXANDRINO, Vicente; PAULO, Marcelo (2016); MENDES, Gilmar Ferreira (2021); CUNHA JÚNIOR, Dirley da (2020)</p>
                     </div>
                 </div>
             </div>
-            <div class="legal-theme">Síntese Conclusiva</div>
+            <div class="legal-theme"><i class="fas fa-paragraph"></i> Síntese Conclusiva</div>
+            <div class="navigation-hint"><i class="fas fa-arrows-left-right"></i> Use as setas ← → do teclado para navegar | <i class="fas fa-mouse-pointer"></i> Clique para avançar</div>
         </div>
         
         <!-- Slide 10: Referências -->
         <div class="slide" id="slide10">
+            <div class="legal-symbols">
+                <i class="fas fa-book-open"></i>
+                <i class="fas fa-graduation-cap"></i>
+            </div>
             <div class="slide-header">
-                <h1 class="slide-title">REFERÊNCIAS BIBLIOGRÁFICAS</h1>
+                <h1 class="slide-title">REFERÊNCIAS BIBLIOGRÁFICAS <span class="legal-badge">Fontes</span></h1>
                 <p class="slide-subtitle">Fundamentação Doutrinária e Legal</p>
             </div>
             <div class="slide-content">
                 <div class="content-item">
                     <div class="point">
-                        <p>ALEXANDRINO, Vicente; PAULO, Marcelo. <strong>Controle de Constitucionalidade</strong>. 9. ed. Rio de Janeiro: Forense, 2016.</p>
+                        <p><i class="fas fa-book"></i> ALEXANDRINO, Vicente; PAULO, Marcelo. <strong>Controle de Constitucionalidade</strong>. 9. ed. Rio de Janeiro: Forense, 2016.</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p>CUNHA JÚNIOR, Dirley da. <strong>Controle de Constitucionalidade: Teoria e Prática</strong>. 10. ed. Salvador: JusPodivm, 2020.</p>
+                        <p><i class="fas fa-book"></i> CUNHA JÚNIOR, Dirley da. <strong>Controle de Constitucionalidade: Teoria e Prática</strong>. 10. ed. Salvador: JusPodivm, 2020.</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p>MENDES, Gilmar Ferreira. <strong>Arguição de Descumprimento de Preceito Fundamental</strong>. São Paulo: Saraiva, 2021.</p>
+                        <p><i class="fas fa-book"></i> MENDES, Gilmar Ferreira. <strong>Arguição de Descumprimento de Preceito Fundamental</strong>. São Paulo: Saraiva, 2021.</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p>BRASIL. <strong>Constituição da República Federativa do Brasil de 1988</strong>.</p>
+                        <p><i class="fas fa-gavel"></i> BRASIL. <strong>Constituição da República Federativa do Brasil de 1988</strong>.</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="point">
-                        <p>BRASIL. <strong>Lei nº 13.988, de 14 de abril de 2020</strong>. Dispõe sobre a arguição de descumprimento de preceito fundamental e a ação direta de intervenção federal.</p>
+                        <p><i class="fas fa-file-contract"></i> BRASIL. <strong>Lei nº 13.988, de 14 de abril de 2020</strong>. Dispõe sobre a arguição de descumprimento de preceito fundamental e a ação direta de intervenção federal.</p>
                     </div>
                 </div>
                 
                 <div class="content-item">
                     <div class="highlight" style="margin-top: 30px; text-align: center;">
-                        <p style="font-size: 24px;">Obrigado pela atenção!</p>
-                        <p style="font-size: 20px; margin-top: 10px;">Perguntas?</p>
+                        <p style="font-size: 24px;"><i class="fas fa-handshake"></i> Obrigado pela atenção!</p>
+                        <p style="font-size: 20px; margin-top: 10px;"><i class="fas fa-question-circle"></i> Perguntas?</p>
                     </div>
                 </div>
             </div>
-            <div class="legal-theme">Base Bibliográfica</div>
-        </div>
-        
-        <!-- Controles de Navegação -->
-        <div class="controls">
-            <button id="prevBtn">⏪ Anterior</button>
-            <div class="page-indicator">Slide <span id="currentSlide">1</span> de 10</div>
-            <button id="nextBtn">Próximo ⏩</button>
+            <div class="legal-theme"><i class="fas fa-paragraph"></i> Base Bibliográfica</div>
+            <div class="navigation-hint"><i class="fas fa-arrows-left-right"></i> Use as setas ← → do teclado para navegar | <i class="fas fa-mouse-pointer"></i> Clique para avançar</div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.slide');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const currentSlide = document.getElementById('currentSlide');
             let slideIndex = 0;
+            
+            // Configuração do upload da logo
+            const logoUpload = document.getElementById('logoUpload');
+            const institutionLogo = document.getElementById('institutionLogo');
+            
+            logoUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        institutionLogo.src = e.target.result;
+                        institutionLogo.alt = "Logo da Instituição";
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
             
             function showSlide(index) {
                 // Esconde todos os slides
@@ -844,7 +1011,6 @@
                 
                 // Mostra o slide atual
                 slides[index].classList.add('active');
-                currentSlide.textContent = index + 1;
                 
                 // Anima os elementos do slide atual
                 animateSlideContent(slides[index]);
@@ -875,18 +1041,33 @@
                 showSlide(slideIndex);
             }
             
-            // Event listeners para os botões
-            nextBtn.addEventListener('click', nextSlide);
-            prevBtn.addEventListener('click', prevSlide);
-            
             // Navegação por teclado
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown' || e.key === 'Enter') {
                     nextSlide();
-                } else if (e.key === 'ArrowLeft') {
+                } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
                     prevSlide();
+                } else if (e.key === 'Home') {
+                    slideIndex = 0;
+                    showSlide(slideIndex);
+                } else if (e.key === 'End') {
+                    slideIndex = slides.length - 1;
+                    showSlide(slideIndex);
                 }
             });
+            
+            // Função de tela cheia
+            window.toggleFullscreen = function() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(err => {
+                        console.log(`Erro ao tentar entrar em tela cheia: ${err.message}`);
+                    });
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    }
+                }
+            };
             
             // Inicializa o primeiro slide com animação
             showSlide(slideIndex);
@@ -913,6 +1094,13 @@
                     prevSlide();
                 }
             }
+            
+            // Adiciona evento de clique nos slides para avançar
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.fullscreen-btn') && !e.target.closest('.file-input-label')) {
+                    nextSlide();
+                }
+            });
         });
     </script>
 </body>
