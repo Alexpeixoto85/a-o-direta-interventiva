@@ -258,6 +258,12 @@
             height: auto;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
         
         .legal-theme {
@@ -303,6 +309,11 @@
         .file-input-container {
             text-align: center;
             margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .file-input-container.hidden {
+            display: none;
         }
         
         .file-input-label {
@@ -312,15 +323,48 @@
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
             margin-bottom: 15px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
         }
         
         .file-input-label:hover {
             background: #283593;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
         }
         
         #logoUpload {
+            display: none;
+        }
+        
+        .change-logo-btn {
+            display: inline-block;
+            background: #d4af37;
+            color: #1a237e;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .change-logo-btn:hover {
+            background: #ffd700;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .change-logo-container {
+            text-align: center;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .change-logo-container.hidden {
             display: none;
         }
         
@@ -391,6 +435,10 @@
                 left: 10px;
                 font-size: 20px;
             }
+            
+            .logo {
+                max-width: 250px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -451,6 +499,20 @@
             margin-left: 10px;
             vertical-align: middle;
         }
+        
+        .logo-success-message {
+            text-align: center;
+            color: #2e7d32;
+            font-size: 14px;
+            margin-top: 10px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .logo-success-message.show {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -469,7 +531,7 @@
             </div>
             <div class="slide-content">
                 <div class="logo-container">
-                    <div class="file-input-container">
+                    <div class="file-input-container" id="fileInputContainer">
                         <label for="logoUpload" class="file-input-label">
                             <i class="fas fa-upload"></i> Carregar Logo da Instituição
                         </label>
@@ -477,6 +539,14 @@
                     </div>
                     <div class="logo">
                         <img id="institutionLogo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWEyMzdlIiByeD0iMTAiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjQwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+RlJNPC90ZXh0PgogIDx0ZXh0IHg9IjUwJSIgeT0iNjAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj5HUkFEVUHDg8ODTyBFPC90ZXh0Pgo8L3N2Zz4K" alt="Logo FRM" class="logo-img">
+                    </div>
+                    <div class="change-logo-container hidden" id="changeLogoContainer">
+                        <button class="change-logo-btn" onclick="showFileInput()">
+                            <i class="fas fa-sync-alt"></i> Alterar Logo
+                        </button>
+                    </div>
+                    <div class="logo-success-message" id="logoSuccessMessage">
+                        <i class="fas fa-check-circle"></i> Logo carregada com sucesso!
                     </div>
                 </div>
                 
@@ -982,10 +1052,28 @@
             const slides = document.querySelectorAll('.slide');
             let slideIndex = 0;
             
-            // Configuração do upload da logo
+            // Elementos do upload da logo
             const logoUpload = document.getElementById('logoUpload');
             const institutionLogo = document.getElementById('institutionLogo');
+            const fileInputContainer = document.getElementById('fileInputContainer');
+            const changeLogoContainer = document.getElementById('changeLogoContainer');
+            const logoSuccessMessage = document.getElementById('logoSuccessMessage');
             
+            // Verifica se já existe uma logo carregada
+            function checkLogoStatus() {
+                const hasCustomLogo = institutionLogo.src !== window.location.href && 
+                                    !institutionLogo.src.includes('data:image/svg+xml');
+                
+                if (hasCustomLogo) {
+                    fileInputContainer.classList.add('hidden');
+                    changeLogoContainer.classList.remove('hidden');
+                } else {
+                    fileInputContainer.classList.remove('hidden');
+                    changeLogoContainer.classList.add('hidden');
+                }
+            }
+            
+            // Configuração do upload da logo
             logoUpload.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
@@ -993,10 +1081,27 @@
                     reader.onload = function(e) {
                         institutionLogo.src = e.target.result;
                         institutionLogo.alt = "Logo da Instituição";
+                        
+                        // Oculta o botão de carregar e mostra o de alterar
+                        fileInputContainer.classList.add('hidden');
+                        changeLogoContainer.classList.remove('hidden');
+                        
+                        // Mostra mensagem de sucesso
+                        logoSuccessMessage.classList.add('show');
+                        setTimeout(() => {
+                            logoSuccessMessage.classList.remove('show');
+                        }, 3000);
                     };
                     reader.readAsDataURL(file);
                 }
             });
+            
+            // Função para mostrar novamente o input de arquivo
+            window.showFileInput = function() {
+                fileInputContainer.classList.remove('hidden');
+                changeLogoContainer.classList.add('hidden');
+                logoUpload.value = ''; // Reseta o input
+            };
             
             function showSlide(index) {
                 // Esconde todos os slides
@@ -1071,6 +1176,7 @@
             
             // Inicializa o primeiro slide com animação
             showSlide(slideIndex);
+            checkLogoStatus();
             
             // Suporte para touch devices
             let touchStartX = 0;
@@ -1097,7 +1203,10 @@
             
             // Adiciona evento de clique nos slides para avançar
             document.addEventListener('click', function(e) {
-                if (!e.target.closest('.fullscreen-btn') && !e.target.closest('.file-input-label')) {
+                if (!e.target.closest('.fullscreen-btn') && 
+                    !e.target.closest('.file-input-label') &&
+                    !e.target.closest('.change-logo-btn') &&
+                    !e.target.closest('#logoUpload')) {
                     nextSlide();
                 }
             });
