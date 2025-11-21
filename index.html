@@ -1,0 +1,591 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADIF - Ação Direta de Intervenção Federal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .slides-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 700px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .slide.active {
+            display: flex;
+        }
+        
+        .slide-header {
+            background: #1e3c72;
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            margin-bottom: 20px;
+        }
+        
+        .slide-title {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .slide-subtitle {
+            font-size: 18px;
+            text-align: center;
+            opacity: 0.9;
+        }
+        
+        .slide-content {
+            flex: 1;
+            padding: 20px;
+            font-size: 22px;
+            line-height: 1.6;
+            overflow-y: auto;
+        }
+        
+        .point {
+            margin: 15px 0;
+            padding-left: 20px;
+            border-left: 4px solid #2a5298;
+        }
+        
+        .highlight {
+            background-color: #e6f2ff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #1e3c72;
+        }
+        
+        .example-box {
+            background-color: #fff8e1;
+            border: 2px dashed #ffa000;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            color: #ff8f00;
+            margin-bottom: 8px;
+        }
+        
+        .video-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .video-container iframe {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 40px;
+            background: #f5f5f5;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #2a5298;
+        }
+        
+        .page-indicator {
+            font-size: 16px;
+            color: #555;
+            align-self: center;
+        }
+        
+        .reference {
+            font-size: 16px;
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        
+        .authors {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+        }
+        
+        .institution {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 16px;
+            color: #777;
+        }
+        
+        .year {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 16px;
+            color: #777;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo img {
+            max-width: 200px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+        <!-- Slide 1: Capa -->
+        <div class="slide active" id="slide1">
+            <div class="slide-header">
+                <h1 class="slide-title">AÇÃO DIRETA DE INTERVENÇÃO FEDERAL - ADIF</h1>
+                <p class="slide-subtitle">Instrumento de Defesa do Pacto Federativo</p>
+            </div>
+            <div class="slide-content">
+                <div class="logo">
+                    <!-- Espaço para logo da instituição -->
+                    <div style="width: 200px; height: 80px; background: #f0f0f0; margin: 0 auto; display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+                        [LOGO FRM]
+                    </div>
+                </div>
+                <div class="authors">
+                    <p>Barbara Emily Correia</p>
+                    <p>José Alex Peixoto de Assis</p>
+                    <p>Glaucia Lemos de Oliveira Pinto do Nascimento</p>
+                    <p>Raquel do Nascimento</p>
+                    <p>Saulo Ramos da Silva</p>
+                </div>
+                <div class="institution">
+                    <p>FACULDADE RAIMUNDO MARINHO</p>
+                    <p>DIREITO</p>
+                </div>
+                <div class="year">
+                    <p>MACEIÓ - 2025</p>
+                </div>
+                <div class="highlight" style="margin-top: 40px;">
+                    <p>Artigo apresentado à Universidade Faculdade Raimundo Marinho, como parte das exigências para a obtenção de nota complementar.</p>
+                    <p>Orientador: Prof. Marcos Melo</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Introdução -->
+        <div class="slide" id="slide2">
+            <div class="slide-header">
+                <h1 class="slide-title">O QUE É A ADIF?</h1>
+                <p class="slide-subtitle">Conceito e Finalidade</p>
+            </div>
+            <div class="slide-content">
+                <div class="point">
+                    <p><strong>Ação de competência originária do STF</strong> prevista na CF/88</p>
+                </div>
+                
+                <div class="point">
+                    <p>Instrumento para <strong>intervenção federal</strong> em Estados e Distrito Federal</p>
+                </div>
+                
+                <div class="point">
+                    <p>Finalidade: <strong>restaurar a ordem constitucional</strong> gravemente violada</p>
+                </div>
+                
+                <div class="point">
+                    <p>Natureza de <strong>última ratio</strong> (último recurso)</p>
+                </div>
+                
+                <div class="highlight">
+                    <p>"A intervenção federal é uma medida excepcional que consiste na suspensão temporária da autonomia de um ente federado para restaurar a ordem constitucional."</p>
+                    <p class="reference">Vicente Paulo e Marcelo Alexandrino (2016, p. 450)</p>
+                </div>
+                
+                <div class="reference">
+                    <p>Referência: Arts. 34 a 36 da CF/88; Lei 13.988/2020</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Fundamentação Legal -->
+        <div class="slide" id="slide3">
+            <div class="slide-header">
+                <h1 class="slide-title">FUNDAMENTAÇÃO LEGAL</h1>
+                <p class="slide-subtitle">Base Normativa da ADIF</p>
+            </div>
+            <div class="slide-content">
+                <div class="point">
+                    <p><strong>Constituição Federal de 1988</strong> - Art. 34, VII</p>
+                </div>
+                
+                <div class="point">
+                    <p><strong>Lei 13.988/2020</strong> - Regulamenta a ADIF e ADPF</p>
+                </div>
+                
+                <div class="point">
+                    <p><strong>Princípios constitucionais sensíveis</strong> (Art. 34, VII):</p>
+                    <ul style="margin-left: 30px; margin-top: 10px;">
+                        <li>Forma republicana, sistema representativo e regime democrático</li>
+                        <li>Direitos da pessoa humana</li>
+                        <li>Autonomia municipal</li>
+                        <li>Prestação de contas da administração pública</li>
+                    </ul>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">DIFERENÇA DA ADI COMUM:</div>
+                    <p><strong>ADI</strong>: Declara inconstitucionalidade de norma<br>
+                    <strong>ADIF</strong>: Visa intervenção federal concreta</p>
+                </div>
+                
+                <div class="reference">
+                    <p>Referência: BRASIL. Constituição da República Federativa do Brasil de 1988; Lei nº 13.988/2020</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Hipóteses de Cabimento -->
+        <div class="slide" id="slide4">
+            <div class="slide-header">
+                <h1 class="slide-title">QUANDO CABE A ADIF?</h1>
+                <p class="slide-subtitle">Violação aos Princípios Sensíveis</p>
+            </div>
+            <div class="slide-content">
+                <p>A ADIF é cabível por violação grave aos princípios sensíveis:</p>
+                
+                <div class="point">
+                    <p>✓ <strong>Forma republicana</strong>: Tentativa de estabelecer governo vitalício</p>
+                </div>
+                
+                <div class="point">
+                    <p>✓ <strong>Direitos humanos</strong>: Perseguição política, tortura</p>
+                </div>
+                
+                <div class="point">
+                    <p>✓ <strong>Autonomia municipal</strong>: Extinção arbitrária de câmaras municipais</p>
+                </div>
+                
+                <div class="point">
+                    <p>✓ <strong>Prestação de contas</strong>: Desvio grave de verbas públicas</p>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">EXEMPLO CONCRETO:</div>
+                    <p>Se um Estado extinguisse arbitrariamente as câmaras municipais, estaria violando a autonomia municipal, configurando hipótese para ADIF.</p>
+                </div>
+                
+                <div class="highlight">
+                    <p>"A ADIF deve ser usada apenas quando não houver outro meio eficaz para sanar a violação."</p>
+                    <p class="reference">Gilmar Ferreira Mendes (2021)</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Legitimidade -->
+        <div class="slide" id="slide5">
+            <div class="slide-header">
+                <h1 class="slide-title">QUEM PODE PROPOR A ADIF?</h1>
+                <p class="slide-subtitle">Legitimados Constitucionais</p>
+            </div>
+            <div class="slide-content">
+                <div class="point">
+                    <p><strong>Legitimados exclusivos</strong> (Art. 9º da Lei 13.988/2020):</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
+                    <div class="highlight">
+                        <p>• Presidente da República</p>
+                    </div>
+                    <div class="highlight">
+                        <p>• Mesa do Senado Federal</p>
+                    </div>
+                    <div class="highlight">
+                        <p>• Mesa da Câmara dos Deputados</p>
+                    </div>
+                    <div class="highlight">
+                        <p>• Procurador-Geral da República</p>
+                    </div>
+                    <div class="highlight">
+                        <p>• Governadores de Estado</p>
+                    </div>
+                </div>
+                
+                <div class="point">
+                    <p><strong>Rol taxativo</strong>: Não admite ampliação por analogia</p>
+                </div>
+                
+                <div class="point">
+                    <p><strong>Natureza política</strong>: Reflete a seriedade da medida</p>
+                </div>
+                
+                <div class="reference">
+                    <p>Referência: Lei 13.988/2020, art. 9º</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Procedimento -->
+        <div class="slide" id="slide6">
+            <div class="slide-header">
+                <h1 class="slide-title">PROCEDIMENTO DA ADIF</h1>
+                <p class="slide-subtitle">Tramitação perante o STF</p>
+            </div>
+            <div class="slide-content">
+                <div class="point">
+                    <p><strong>Fase cognitiva</strong>: Análise da procedência da ação</p>
+                </div>
+                
+                <div class="point">
+                    <p><strong>Medida liminar</strong>: STF pode determinar intervenção cautelar</p>
+                </div>
+                
+                <div class="point">
+                    <p><strong>Nomeação de Interventor</strong>: Pelo Presidente da República</p>
+                </div>
+                
+                <div class="point">
+                    <p><strong>Julgamento de mérito</strong>: Decisão definitiva sobre a intervenção</p>
+                </div>
+                
+                <div class="highlight">
+                    <p><strong>Efeitos da decisão</strong>:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Erga omnes</strong> (para todos)</li>
+                        <li><strong>Vinculante</strong> (obriga outras autoridades)</li>
+                        <li><strong>Suspensão da autonomia</strong> do ente federado</li>
+                    </ul>
+                </div>
+                
+                <div class="reference">
+                    <p>Referência: Cunha Júnior, Dirley da. Controle de Constitucionalidade (2020)</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Vídeo Explicativo -->
+        <div class="slide" id="slide7">
+            <div class="slide-header">
+                <h1 class="slide-title">ENTENDA A ADIF</h1>
+                <p class="slide-subtitle">Vídeo Explicativo</p>
+            </div>
+            <div class="slide-content">
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/3Q4XQlJyv_c" title="Vídeo sobre Intervenção Federal" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="highlight">
+                    <p><strong>Fonte</strong>: Canal oficial do Supremo Tribunal Federal - STF</p>
+                    <p><strong>Conteúdo</strong>: Esclarecimento sobre intervenção federal e seu procedimento</p>
+                </div>
+                <div class="point">
+                    <p>O vídeo do STF explica de forma didática:</p>
+                    <ul style="margin-left: 30px; margin-top: 10px;">
+                        <li>Os fundamentos constitucionais da intervenção</li>
+                        <li>As hipóteses de cabimento</li>
+                        <li>O papel do STF no processo</li>
+                        <li>As consequências da medida</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Contexto no Controle de Constitucionalidade -->
+        <div class="slide" id="slide8">
+            <div class="slide-header">
+                <h1 class="slide-title">ADIF NO CONTROLE DE CONSTITUCIONALIDADE</h1>
+                <p class="slide-subtitle">Relação com Outros Instrumentos</p>
+            </div>
+            <div class="slide-content">
+                <div class="point">
+                    <p><strong>Controle concreto</strong>: Atua sobre atos estatais (normativos ou materiais)</p>
+                </div>
+                
+                <div class="point">
+                    <p><strong>Natureza correitiva</strong>: Busca restaurar a legalidade constitucional</p>
+                </div>
+                
+                <div class="point">
+                    <p><strong>Relação com ADPF</strong>: A ADPF pode evitar a necessidade de intervenção</p>
+                </div>
+                
+                <div class="highlight">
+                    <p>"A ADIF é a resposta constitucional brasileira para conflitos federativos, funcionando como um freio para evitar que as unidades federadas se desviem dos fundamentos do pacto federativo."</p>
+                    <p class="reference">Baseado em Mauro Cappelletti (1993)</p>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">COMPARAÇÃO:</div>
+                    <p><strong>ADPF</strong>: Remédio flexível para descumprimento de preceitos<br>
+                    <strong>ADIF</strong>: Corretivo extremo para violações graves</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Conclusão -->
+        <div class="slide" id="slide9">
+            <div class="slide-header">
+                <h1 class="slide-title">CONCLUSÕES</h1>
+                <p class="slide-subtitle">Síntese do Instituto</p>
+            </div>
+            <div class="slide-content">
+                <div class="point">
+                    <p>A ADIF é <strong>instrumento essencial</strong> para preservação da Federação</p>
+                </div>
+                
+                <div class="point">
+                    <p>Natureza <strong>excepcional e drástica</strong></p>
+                </div>
+                
+                <div class="point">
+                    <p>Última trincheira para garantia dos <strong>princípios sensíveis</strong></p>
+                </div>
+                
+                <div class="point">
+                    <p>Manejo deve ser <strong>pautado pela prudência</strong></p>
+                </div>
+                
+                <div class="highlight">
+                    <p>"A autonomia federativa não é absoluta, mas sim condicionada ao respeito irrestrito aos pilares da ordem constitucional."</p>
+                </div>
+                
+                <div class="reference">
+                    <p>Referências: ALEXANDRINO, Vicente; PAULO, Marcelo (2016); MENDES, Gilmar Ferreira (2021); CUNHA JÚNIOR, Dirley da (2020)</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 10: Referências -->
+        <div class="slide" id="slide10">
+            <div class="slide-header">
+                <h1 class="slide-title">REFERÊNCIAS BIBLIOGRÁFICAS</h1>
+                <p class="slide-subtitle">Fontes de Pesquisa</p>
+            </div>
+            <div class="slide-content">
+                <div class="point">
+                    <p>ALEXANDRINO, Vicente; PAULO, Marcelo. <strong>Controle de Constitucionalidade</strong>. 9. ed. Rio de Janeiro: Forense, 2016.</p>
+                </div>
+                
+                <div class="point">
+                    <p>CUNHA JÚNIOR, Dirley da. <strong>Controle de Constitucionalidade: Teoria e Prática</strong>. 10. ed. Salvador: JusPodivm, 2020.</p>
+                </div>
+                
+                <div class="point">
+                    <p>MENDES, Gilmar Ferreira. <strong>Arguição de Descumprimento de Preceito Fundamental</strong>. São Paulo: Saraiva, 2021.</p>
+                </div>
+                
+                <div class="point">
+                    <p>BRASIL. <strong>Constituição da República Federativa do Brasil de 1988</strong>.</p>
+                </div>
+                
+                <div class="point">
+                    <p>BRASIL. <strong>Lei nº 13.988, de 14 de abril de 2020</strong>. Dispõe sobre a arguição de descumprimento de preceito fundamental e a ação direta de intervenção federal.</p>
+                </div>
+                
+                <div class="highlight" style="margin-top: 30px;">
+                    <p>Obrigado pela atenção!</p>
+                    <p>Perguntas?</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Controles de Navegação -->
+        <div class="controls">
+            <button id="prevBtn">Anterior</button>
+            <div class="page-indicator">Slide <span id="currentSlide">1</span> de 10</div>
+            <button id="nextBtn">Próximo</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const currentSlide = document.getElementById('currentSlide');
+            let slideIndex = 0;
+            
+            function showSlide(index) {
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                
+                slides[index].classList.add('active');
+                currentSlide.textContent = index + 1;
+            }
+            
+            function nextSlide() {
+                slideIndex++;
+                if (slideIndex >= slides.length) {
+                    slideIndex = 0;
+                }
+                showSlide(slideIndex);
+            }
+            
+            function prevSlide() {
+                slideIndex--;
+                if (slideIndex < 0) {
+                    slideIndex = slides.length - 1;
+                }
+                showSlide(slideIndex);
+            }
+            
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight') {
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                }
+            });
+            
+            showSlide(slideIndex);
+        });
+    </script>
+</body>
+</html>
